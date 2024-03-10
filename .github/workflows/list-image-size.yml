@@ -1,0 +1,21 @@
+name: Check Docker Images Sizes
+on:
+  workflow_dispatch:
+jobs:
+  check-sizes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to GitHub Container Registry
+        run: echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Get list of images
+        id: get-images
+        run: echo "::set-output name=list::$(docker image ls --format '{{.Repository}}:{{.Tag}}')"
+
+      - name: Display sizes of images
+        run: |
+          for image in ${{ steps.get-images.outputs.list }}
+          do
+            docker pull $image
+            docker inspect $image --format='{{.RepoTags}} - Size: {{.Size}} bytes'
+          done

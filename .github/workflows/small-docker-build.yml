@@ -148,8 +148,8 @@ jobs:
           
           if [[ $ver_tag == ${{ env.LATEST_CUDA }} ]]; then
               TAGS="${img_path}:latest, ${img_path}:latest-cuda, ${img_path}:$ver_tag"
-          elif [[ $ver_tag == ${{ env.LATEST_CUDA_JUPYTER }} ]]; then
-              TAGS="${img_path}:latest-jupyter, ${img_path}:latest-cuda-jupyter, ${img_path}:$ver_tag"
+          # elif [[ $ver_tag == ${{ env.LATEST_CUDA_JUPYTER }} ]]; then
+          #     TAGS="${img_path}:latest-jupyter, ${img_path}:latest-cuda-jupyter, ${img_path}:$ver_tag"
           else
               TAGS="${img_path}:$ver_tag"
           fi
